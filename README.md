@@ -284,7 +284,7 @@ If you find this work useful, please cite:
            Negative Result on Zero-Space Projection for Multi-Object 
            Tracking and Cooperative Perception},
     author={Chang, Lien-Hsing and {ABN-QSS Research Team}},
-    journal={arXiv preprint arXiv:2026.XXXXX},
+    journal={https://orcid.org/0009-0002-1476-6341},
     year={2026}
 }
 ```
