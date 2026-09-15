@@ -1,0 +1,91 @@
+\section{Introduction}
+\label{sec:intro}
+
+\subsection{Motivation: Physics-Native Computing}
+
+Since 1945, the von Neumann architecture has defined digital 
+computation: programs are stored in memory and executed by a 
+sequential fetch-decode-execute cycle. As Moore's law slows and the 
+memory wall tightens, this separation imposes two fundamental limits: 
+(a) \emph{energy waste}: moving data costs $100\times$ more than 
+computing on it~\cite{horowitz2014computing}; and 
+(b) \emph{the clock bottleneck}: complex iterative problems 
+(such as Einstein field equations, fluid dynamics, and quantum 
+many-body systems) suffer severe latency from sequential iteration 
+and ECC verification overhead.
+
+Physics-native computing proposes a different paradigm: rather than 
+\emph{simulating} mathematics in hardware, let the hardware 
+\emph{be} the mathematics. The intrinsic physical laws of analog 
+circuits---Ohm's law, Kirchhoff's laws, capacitor charge dynamics---can 
+directly realize variational relaxation and solve constraint-satisfaction 
+problems without clocked iteration~\cite{adamatzky2019physics}.
+
+\subsection{Zero-Space Projection: A Brief Recap}
+
+\abnqss v3.0 is a representative physics-native architecture based on 
+a silicon-photonics MZI array (L0 layer) coupled with an analog OTA-C 
+array (L1 ``Shenqu engine''). Its core theoretical claim is the 
+\emph{zero-space projection lock theorem}:
+\begin{equation}
+    \Cvec_{\mathrm{final}} = \proj \cdot (\Cvec_{\mathrm{base}} 
+    - \delta \cdot \alpha \cdot \evec_0),
+    \label{eq:projection}
+\end{equation}
+where $\proj = \Vmat \Vmat^\top$ is the projection matrix onto the 
+null space of the constraint matrix $\Mmat$, $\Vmat$ is a null-space 
+basis, $\delta$ is a physical perturbation, and $\alpha$ is the 
+physical coupling constant.
+
+The digital twin of \abnqss v3.0 has been validated for 
+$N = 3, \dots, 6$, showing:
+\begin{itemize}[leftmargin=*]
+    \item Projection linearity $R^2 = 1.000000$ (exact);
+    \item Null-space dimension $K = N(N-1)/2$ (exact);
+    \item Physical coupling slope $\alpha \in [0.0075, 0.0115]$, 
+          increasing with $N$.
+\end{itemize}
+
+\subsection{Motivating the Present Study}
+
+Given the strong theoretical foundation of \ZSP, a natural question 
+arises: \emph{where should \ZSP be applied?} 
+
+Multi-object tracking (\MOT) and cooperative perception are natural 
+candidate applications, because their core computational step---data 
+association---can be cast as a constraint-satisfaction problem. Several 
+prior works have advocated for physics-based or analog approaches to 
+perception~\cite{...}. 
+
+This paper reports the outcome of a six-month systematic study 
+evaluating \ZSP on three perception tasks. \textbf{Our results are 
+negative}: in all three tasks, the classical Hungarian algorithm 
+is either strictly better (in accuracy, speed, or communication 
+cost) or equal. 
+
+\subsection{Contributions}
+
+Our contributions are:
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{A complete experimental framework} spanning 
+          digital-twin verification to real benchmarks, with 
+          all code and data released open-source.
+    \item \textbf{Systematic negative results} on three perception 
+          tasks: single-frame \MOT, multi-frame \MOT, and 
+          cooperative perception.
+    \item \textbf{A root-cause analysis}: linear assignment problems 
+          possess a dual structure that enables exact polynomial 
+          algorithms, which \ZSP's iterative nature cannot beat.
+    \item \textbf{An explicit applicability boundary}: \ZSP should 
+          be applied to problems without good algorithms, not to 
+          problems already solved by exact methods.
+\end{enumerate}
+
+\subsection{Paper Organization}
+
+\Cref{sec:related} reviews related work. 
+\Cref{sec:method} formalizes \ZSP for the three perception tasks. 
+\Cref{sec:experiments} presents the experimental results. 
+\Cref{sec:analysis} analyzes why \ZSP fails. 
+\Cref{sec:discussion} discusses the applicability boundary. 
+\Cref{sec:conclusion} concludes.

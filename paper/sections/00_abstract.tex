@@ -1,0 +1,27 @@
+Zero-Space Projection (\ZSP) is a core mechanism of the 
+\abnqss v3.0 physics-native computing architecture, whose digital 
+twin has demonstrated projection linearity $R^2 = 1.0$ and a 
+null-space dimension formula $K = N(N-1)/2$. This paper 
+systematically evaluates \ZSP on three perception tasks: 
+single-frame multi-object tracking (\MOT), multi-frame \MOT, and 
+cooperative perception. Our findings are threefold: 
+(i) on \textbf{single-frame \MOT}, \ZSP reaches $99.96\%$ of the 
+accuracy of the Hungarian algorithm but is $20{,}000\times$ slower; 
+(ii) on \textbf{multi-frame \MOT}, a paired $t$-test across 30 seeds 
+shows \ZSP is $6.7\%$ worse than Hungarian on average 
+($p = 0.0001$, win rate $0\%$); 
+(iii) on \textbf{cooperative perception}, all three methods 
+(centralized Hungarian, distributed Hungarian, and distributed \ZSP) 
+achieve $100\%$ accuracy, but distributed Hungarian is fastest with 
+zero communication overhead. 
+
+We analyze the root cause: linear assignment problems possess a 
+\emph{dual structure} that enables the Hungarian algorithm to achieve 
+exact optimality in polynomial time, whereas \ZSP is an iterative 
+approximation that cannot, by construction, outperform the exact 
+algorithm. We conclude that the value of \ZSP---and of physics-native 
+computing more broadly---lies not in \emph{replacing} problems already 
+solved by exact algorithms, but in \emph{solving problems without good 
+algorithms}: material simulation, physics-layer cryptography, 
+high-precision sensing, and variational field solving. This work 
+provides an explicit boundary for physics-native computing paradigms.

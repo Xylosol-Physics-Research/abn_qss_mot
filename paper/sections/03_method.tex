@@ -1,0 +1,102 @@
+\section{Methodology}
+\label{sec:method}
+
+\subsection{Null-Space Projection Framework}
+
+Given a constraint matrix $\Mmat \in \R^{m \times n}$, the null 
+space is:
+\begin{equation}
+    \nullsp(\Mmat) = \{\Cvec \in \R^n : \Mmat \Cvec = 0\}.
+\end{equation}
+A null-space basis $\Vmat \in \R^{n \times K}$ satisfies $\Mmat \Vmat = 0$. 
+Any feasible solution can be parameterized as:
+\begin{equation}
+    \Cvec = \Vmat \avec + \Cvec_0, \quad \avec \in \R^K,
+\end{equation}
+where $\Cvec_0$ is a particular solution and $K = n - \rank(\Mmat)$.
+
+The projection matrix is $\proj = \Vmat \Vmat^\top$.
+
+\subsection{Formalization for MOT Association}
+
+Consider $T$ tracks and $D$ detections. Let $x_{ij} \in [0,1]$ denote 
+the association probability. The constraints are:
+\begin{align}
+    \sum_{i=1}^{T} x_{ij} + s_j &= 1, \quad j = 1, \dots, D, 
+        \label{eq:det-uniqueness}\\
+    \sum_{j=1}^{D} x_{ij} + t_i &= 1, \quad i = 1, \dots, T,
+        \label{eq:traj-uniqueness}
+\end{align}
+where $s_j, t_i \ge 0$ are slack variables.
+
+\paragraph{Homogenization.} Define 
+$\Cvec = [\xvec^\top, \mathbf{s}^\top, \mathbf{t}^\top, 1]^\top$ 
+and $\Mmat = [\mathbf{A}, -\mathbf{b}]$ where 
+$\mathbf{A} \Cvec_{1:n} = \mathbf{b}$ encodes 
+\cref{eq:det-uniqueness,eq:traj-uniqueness}. Then the constraint 
+becomes $\Mmat \Cvec = 0$.
+
+\subsection{Multi-Frame Extension with Soft Continuity}
+
+For $K$ frames, we stack the association matrices 
+$\xvec^{(1)}, \dots, \xvec^{(K)}$ into a single variable. In addition 
+to per-frame constraints, we introduce a \emph{soft continuity} 
+penalty:
+\begin{equation}
+    J_{\text{cont}} = \beta \sum_{t=1}^{K-1} 
+    \left\| \mathbf{r}^{(t+1)} - \mathbf{r}^{(t)} \right\|^2,
+\end{equation}
+where $r_i^{(t)} = \sum_j x_{ij}^{(t)}$ is the row-sum for track $i$ 
+at frame $t$, and $\beta$ controls the continuity weight.
+
+The full objective is:
+\begin{equation}
+    J = \underbrace{-\sum_t \sum_{i,j} p_{ij}^{(t)} x_{ij}^{(t)}}_{
+        \text{similarity reward}}
+    + \lambda \|\xvec\|^2 
+    + \mu (\|\mathbf{s}\|^2 + \|\mathbf{t}\|^2)
+    + \beta \|J_{\text{cont}}\|.
+\end{equation}
+
+\subsection{Cooperative Perception Extension}
+
+For $M$ vehicles, each with $T$ local tracks and $D$ local detections, 
+we solve a distributed null-space problem. Each vehicle solves:
+\begin{equation}
+    \min_{\avec_m} J_m(\Vmat_m \avec_m),
+\end{equation}
+and exchanges only the association vectors of boundary detections:
+\begin{equation}
+    \mathbf{b}_m = \{ x_{ij}^{(m)} : (i,j) \in \mathcal{B}_m \},
+\end{equation}
+where $\mathcal{B}_m$ is the boundary set (detections shared with 
+neighbors).
+
+\paragraph{Communication cost.} Each vehicle broadcasts 
+$T \times 8$ bytes per boundary round, totaling 
+$M \times T \times 8 \times R$ bytes for $R$ rounds.
+
+\subsection{Projected Gradient Solver}
+
+We solve the problem via projected gradient descent on $\avec$:
+\begin{equation}
+    \avec_{k+1} = \avec_k - \eta \Vmat^\top \nabla_\Cvec J(\Vmat \avec_k) 
+    - \gamma (D - D_{\text{th}}) \frac{\avec_k - \bar{\avec}_k}{\|\avec_k - \bar{\avec}_k\|},
+\end{equation}
+where:
+\begin{itemize}[leftmargin=*]
+    \item $\eta$ is the learning rate;
+    \item $\gamma$ is the symmetry recovery gain;
+    \item $D = \Var(\xvec) / \sigma_{\max}^2$ is the mismatch;
+    \item $D_{\text{th}}$ is the mismatch threshold.
+\end{itemize}
+
+After convergence, we binarize via the Hungarian algorithm on the 
+continuous solution.
+
+\subsection{Convergence Guarantee}
+
+The loss $J$ is convex and $L$-smooth on the null-space parameterization. 
+By standard projected gradient theory, the update converges 
+monotonically to the global optimum for $\eta < 2/L$. \Cref{app:convergence} 
+provides details.

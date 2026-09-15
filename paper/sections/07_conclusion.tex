@@ -1,0 +1,33 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+We systematically evaluated Zero-Space Projection (\ZSP) on three 
+perception tasks: single-frame \MOT, multi-frame \MOT, and 
+cooperative perception. Our conclusions are:
+
+\begin{enumerate}[leftmargin=*]
+    \item On \textbf{single-frame \MOT}, \ZSP achieves $99.96\%$ of 
+          Hungarian's accuracy but is $20{,}000\times$ slower.
+    \item On \textbf{multi-frame \MOT}, \ZSP is statistically 
+          significantly worse than Hungarian ($-6.7\%$, $p=0.0001$, 
+          win rate $0\%$).
+    \item On \textbf{cooperative perception}, all methods achieve 
+          $100\%$ accuracy, but distributed Hungarian is fastest and 
+          requires zero communication.
+\end{enumerate}
+
+\textbf{Root cause.} Linear assignment problems possess a dual 
+structure that enables the Hungarian algorithm to achieve exact 
+optimality in polynomial time. \ZSP is an iterative approximation 
+and cannot, by construction, outperform the exact algorithm.
+
+\textbf{Implication.} The value of \ZSP---and of physics-native 
+computing more broadly---is not in replacing problems already 
+solved by exact algorithms. It is in solving problems that lack 
+such algorithms: material simulation, physics-layer cryptography, 
+high-precision sensing, and variational field solving.
+
+\textbf{Final thought.} Knowing when \emph{not} to use a tool is 
+as important as knowing when to use it. We hope this negative 
+result serves as a useful boundary marker for the physics-native 
+computing community.

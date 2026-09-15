@@ -1,0 +1,74 @@
+\section{Related Work}
+\label{sec:related}
+
+\subsection{Data Association in Multi-Object Tracking}
+
+Data association in \MOT is a classical linear assignment problem. 
+Traditional methods include:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Hungarian algorithm}~\cite{kuhn1955hungarian}: 
+          an $O(n^3)$ exact polynomial algorithm.
+    \item \textbf{MIP methods}~\cite{jiang2015multiple}: integer 
+          programming, exact at small scales but slow at large scales.
+    \item \textbf{Greedy matching}: $O(n \log n)$ but non-optimal.
+    \item \textbf{Deep learning approaches}~\cite{zhang2022bytetrack,
+          cao2023observation}: learn similarity functions, but 
+          association itself still uses Hungarian.
+\end{itemize}
+
+A key observation is that the \emph{combinatorial} structure of \MOT 
+data association is \emph{linear}. Its dual form admits exact polynomial 
+solution. This is the theoretical reason for Hungarian's dominance.
+
+\subsection{Cooperative Perception}
+
+Cooperative perception~\cite{chen2019cooper} enables multiple vehicles 
+or edge devices to share sensor data and overcome single-vehicle field-
+of-view limitations. Representative methods include:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{V2X-ViT}~\cite{xu2022v2x}: Transformer-based 
+          cooperative perception.
+    \item \textbf{CoBEVT}~\cite{xu2022cobevt}: bird's-eye view 
+          cooperative perception.
+    \item \textbf{AttFuse}~\cite{xu2022opv2v}: attention-based 
+          intermediate fusion.
+\end{itemize}
+Again, the association step in these pipelines remains Hungarian.
+
+\subsection{Physics-Native Computing and \abnqss}
+
+\abnqss v3.0~\cite{chang2026abnqss} is a representative 
+physics-native computing architecture with:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{L0 photonic layer}: silicon-photonics MZI 
+          interferometer array for matrix multiplication and 
+          null-space projection.
+    \item \textbf{L1 analog layer}: OTA-C ``Shenqu engine'' for 
+          nonlinear feedback control.
+    \item \textbf{L2 digital layer}: FPGA/CMOS for timing and 
+          buffering.
+    \item \textbf{L5 cognitive layer}: external host/SoC for 
+          macro task scheduling.
+\end{itemize}
+The digital twin of \abnqss v3.0 has been validated for $N=3$ to 
+$N=6$ via Python simulation~\cite{chang2026n4}.
+
+\subsection{Hungarian Algorithm and the Dual Structure}
+
+Linear assignment is:
+\begin{equation}
+    \min_{x \in \{0,1\}^{T \times D}} \sum_{i,j} c_{ij} x_{ij}
+    \quad \text{s.t.} \quad 
+    \sum_i x_{ij} = 1,\; \sum_j x_{ij} = 1.
+\end{equation}
+Its Lagrangian dual is:
+\begin{equation}
+    \max_{u, v} \sum_i u_i + \sum_j v_j
+    \quad \text{s.t.} \quad u_i + v_j \le c_{ij}.
+\end{equation}
+The Hungarian algorithm exploits this dual structure and terminates 
+in $O(n^3)$ time with an exact certificate of optimality.
+
+\textbf{Theoretical consequence}: any iterative approximation 
+algorithm (including \ZSP) cannot improve on Hungarian for this 
+problem class, because the dual certificate is already exact.
