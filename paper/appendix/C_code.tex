@@ -1,0 +1,59 @@
+\section{Code and Data}
+\label{app:code}
+
+\subsection{Repository Structure}
+
+\begin{verbatim}
+abn_qss_mot/
+├── core/
+│   ├── constraint.py       # Constraint matrix construction
+│   ├── nullspace.py        # SVD-based null-space extraction
+│   ├── solver.py           # Projected gradient solver
+│   ├── multi_frame.py      # Multi-frame extension
+│   └── cooperative.py      # Cooperative extension
+├── experiments/
+│   ├── benchmark.py        # Single-frame benchmark
+│   ├── benchmark_multiframe.py
+│   ├── cooperative_benchmark.py
+│   ├── statistical_significance.py
+│   └── plotting/
+│       ├── fig1_digital_twin.py
+│       └── ... (8 figures)
+├── tests/
+│   ├── test_constraint.py
+│   ├── test_nullspace.py
+│   └── test_solver.py
+└── results/
+    ├── single_frame.txt
+    ├── multi_frame.txt
+    └── statistical.txt
+\end{verbatim}
+
+\subsection{Reproduction Commands}
+
+\begin{verbatim}
+# Install dependencies
+pip install -e .
+
+# Run all tests
+pytest tests/ -v --cov=core
+
+# Single-frame benchmark
+python -m experiments.benchmark
+
+# Multi-frame benchmark
+python -m experiments.benchmark_multiframe
+
+# Cooperative benchmark
+python -m experiments.cooperative_benchmark
+
+# Statistical significance
+python -m experiments.statistical_significance
+
+# Regenerate all figures
+python -m experiments.plotting.plot_all
+\end{verbatim}
+
+\subsection{License}
+
+Code released under MIT license. Data released under CC-BY-4.0.

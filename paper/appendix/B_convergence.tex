@@ -1,0 +1,45 @@
+\section{Convergence Analysis}
+\label{app:convergence}
+
+\begin{proposition}[Monotone Descent]
+Let $J: \R^K \to \R$ be $L$-smooth and convex. The projected gradient 
+update
+\begin{equation}
+    \avec_{k+1} = \avec_k - \eta \nabla J(\avec_k)
+\end{equation}
+satisfies
+\begin{equation}
+    J(\avec_{k+1}) \le J(\avec_k) - \eta \left(1 - \frac{\eta L}{2}\right) 
+    \|\nabla J(\avec_k)\|^2.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+By $L$-smoothness:
+\begin{equation}
+    J(\avec_{k+1}) \le J(\avec_k) + \nabla J(\avec_k)^\top 
+    (\avec_{k+1} - \avec_k) + \frac{L}{2} \|\avec_{k+1} - \avec_k\|^2.
+\end{equation}
+Substituting $\avec_{k+1} - \avec_k = -\eta \nabla J(\avec_k)$:
+\begin{align}
+    J(\avec_{k+1}) &\le J(\avec_k) - \eta \|\nabla J\|^2 
+    + \frac{\eta^2 L}{2} \|\nabla J\|^2 \\
+    &= J(\avec_k) - \eta \left(1 - \frac{\eta L}{2}\right) \|\nabla J\|^2.
+\end{align}
+For $\eta < 2/L$, the right-hand side decreases monotonically.
+\end{proof}
+
+\begin{corollary}[Convergence Rate]
+For $\eta < 2/L$, the iterates converge to the global optimum 
+$\avec^*$ with rate:
+\begin{equation}
+    J(\avec_k) - J(\avec^*) \le \frac{\|\avec_0 - \avec^*\|^2}{2\eta k}.
+\end{equation}
+\end{corollary}
+
+\subsection{Non-Negative Projection}
+
+After each step, we clamp $\xvec \ge 0$. This is equivalent to 
+projecting onto the non-negative orthant, which is a convex set. 
+By standard projected gradient theory~\cite{bertsekas1999nonlinear}, 
+convergence is preserved.

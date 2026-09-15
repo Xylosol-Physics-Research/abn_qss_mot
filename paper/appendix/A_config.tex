@@ -1,0 +1,33 @@
+\section{Experimental Configuration}
+\label{app:config}
+
+\subsection{Hardware and Software}
+
+All experiments were run on:
+\begin{itemize}[leftmargin=*]
+    \item CPU: Intel Core i9-13900K (24 cores, 5.8 GHz)
+    \item RAM: 64 GB DDR5
+    \item OS: Windows 11
+    \item Python: 3.12.10
+    \item NumPy: 2.x
+    \item SciPy: 1.14.x
+    \item pytest: 9.0.1
+\end{itemize}
+
+\subsection{Test Configuration Table}
+
+\begin{table}[H]
+    \centering
+    \caption{Complete experimental matrix.}
+    \label{tab:config}
+    \begin{tabular}{l l l l}
+        \toprule
+        Experiment & Config & Method & Metrics \\
+        \midrule
+        Single-frame & $T,D \in \{10,20,30,50\}$ & Hung./Greedy/ZSP & Cost, Time \\
+        Multi-frame & $K \in \{3,4,5\}$ & Hung./ZSP & Acc., IDSW \\
+        Cooperative & $M \in \{2,3,4\}$ & Cent./Dist./ZSP & Acc., Time, Comm \\
+        Statistical & 30 seeds & Paired $t$-test & $p$-value \\
+        \bottomrule
+    \end{tabular}
+\end{table}
