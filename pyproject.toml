@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "abn_qss_mot"
+version = "0.1.0"
+description = "Zero-Space Projection for Multi-Object Tracking: A Negative Result"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Lien-Hsing Chang", email = "abn-qss@research.org"},
+    {name = "ABN-QSS Research Team"},
+]
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24.0",
+    "scipy>=1.10.0",
+    "matplotlib>=3.7.0",
+    "tqdm>=4.65.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+]
+torch = [
+    "torch>=2.0.0",
+    "torchvision>=0.15.0",
+]
+data = [
+    "open3d>=0.17.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/<your-username>/abn_qss_mot"
+Paper = "https://arxiv.org/abs/2026.XXXXX"
+Issues = "https://github.com/<your-username>/abn_qss_mot/issues"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-v --tb=short"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["core*", "data*", "eval*", "experiments*"]
+
+[tool.coverage.run]
+source = ["core"]
+omit = ["tests/*", "*/__init__.py"]
