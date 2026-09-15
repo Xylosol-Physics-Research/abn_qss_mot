@@ -1,0 +1,13 @@
+numpy>=1.24.0
+scipy>=1.10.0
+matplotlib>=3.7.0
+pytest>=7.0.0
+pytest-cov>=4.0.0
+tqdm>=4.65.0
+
+# Optional: for ReID feature extraction
+# torch>=2.0.0
+# torchvision>=0.15.0
+
+# Optional: for dataset loading
+# open3d>=0.17.0
