@@ -1,0 +1,108 @@
+% main.tex
+\documentclass[11pt,letterpaper]{article}
+
+% --- 基本套件 ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{siunitx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{authblk}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumitem}
+\usepackage{threeparttable}
+\usepackage{float}
+
+% --- 超連結設定 ---
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!60!black,
+    citecolor=green!50!black,
+    urlcolor=blue!70!black,
+}
+
+% --- 定理環境 ---
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+% --- 自定義命令 ---
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\ZSP}{\textsc{ZSP}\xspace}
+\newcommand{\MOT}{\textsc{MOT}\xspace}
+\newcommand{\abnqss}{\textsc{ABN-QSS}\xspace}
+\newcommand{\facs}{\textsc{FACS}\xspace}
+\newcommand{\proj}{\mathcal{P}}
+\newcommand{\nullsp}{\mathrm{Null}}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Mmat}{\mathbf{M}}
+\newcommand{\Cvec}{\mathbf{C}}
+\newcommand{\xvec}{\mathbf{x}}
+\newcommand{\avec}{\mathbf{a}}
+\newcommand{\zvec}{\mathbf{z}}
+\newcommand{\Vmat}{\mathbf{V}}
+\newcommand{\evec}{\mathbf{e}}
+
+\usepackage{xspace}
+
+% --- 標題 ---
+\title{
+    \bfseries The Boundaries of Physics-Native Computing:\\
+    A Systematic Negative Result on Zero-Space Projection\\
+    for Multi-Object Tracking and Cooperative Perception
+}
+
+\author[1]{Lien-Hsing Chang}
+\author[2]{ABN-QSS Research Team}
+\affil[1]{Independent Researcher}
+\affil[2]{\texttt{abn-qss@research.org}}
+
+\date{September 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\input{sections/00_abstract}
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\input{sections/01_intro}
+\input{sections/02_related}
+\input{sections/03_method}
+\input{sections/04_experiments}
+\input{sections/05_analysis}
+\input{sections/06_discussion}
+\input{sections/07_conclusion}
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\newpage
+\appendix
+\input{appendix/A_config}
+\input{appendix/B_convergence}
+\input{appendix/C_code}
+
+\end{document}
